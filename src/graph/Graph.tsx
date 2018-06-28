@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { createStyles, Theme, withStyles, WithStyles } from '../../node_modules/@material-ui/core';
 
-import { PointLike } from '../math/Vector';
+import Node from '../math/Node';
 import GraphNode from './GraphNode';
 
 
@@ -28,7 +28,7 @@ const styles = (theme: Theme) => createStyles({
 
 
 interface Props extends WithStyles<typeof styles> {
-    nodes: PointLike[],
+    nodes: Node[],
 }
 
 class Graph extends React.Component<Props, {}> {
@@ -39,7 +39,7 @@ class Graph extends React.Component<Props, {}> {
                 <div className={classes.toolbar} />
                 <div className={classes.container}>
                     {
-                        nodes.map((node, index) => <GraphNode key={index} position={node} />)
+                        nodes.map((node, index) => <GraphNode key={index} position={node.freeBody.position} />)
                     }
                 </div>
             </div>

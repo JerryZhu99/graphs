@@ -9,6 +9,9 @@ import Editor from './editor/Editor';
 import Graph from './graph/Graph';
 
 import './App.css';
+import { FreeBody } from './math/FreeBody';
+import Node from './math/Node';
+import Vector from './math/Vector';
 
 const styles = (theme: Theme) => createStyles({
   app: {
@@ -29,20 +32,21 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface State {
-  nodes: any[];
+  nodes: Node[];
 }
 
 class App extends React.Component<Props, State> {
   public state = {
-    nodes: [{
-      x: -120, y: 0
-    }]
+    nodes: [new Node(new FreeBody(new Vector(-500, 0), new Vector(50, 0)), "Test")]
   }
 
   public update = () => {
-    requestAnimationFrame(() => {
+    let prevTime = performance.now();
+    requestAnimationFrame(time => {
+      const deltaTime = (time - prevTime) / 1000.0;
+      prevTime = time;
       this.setState({
-        nodes: this.state.nodes.map((e: any) => ({ x: e.x + 10, y: e.y }))
+        nodes: this.state.nodes.map(e => e.update(deltaTime))
       }, this.update)
     })
   }
