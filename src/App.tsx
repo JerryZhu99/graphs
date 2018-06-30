@@ -12,6 +12,7 @@ import './App.css';
 import { FreeBody } from './math/FreeBody';
 import Node from './math/Node';
 import Vector from './math/Vector';
+import { random } from './utils/Functions';
 
 const styles = (theme: Theme) => createStyles({
   app: {
@@ -37,7 +38,18 @@ interface State {
 
 class App extends React.Component<Props, State> {
   public state = {
-    nodes: [new Node(new FreeBody(new Vector(-500, 0), new Vector(50, 0)), "Test")]
+    nodes:
+      (new Array(20)).fill(0).map(() => (
+        new Node(
+          new FreeBody(
+            new Vector(
+              random() * 500,
+              random() * 500),
+            new Vector(
+              random() * 50,
+              random() * 50)),
+          "Test")
+      ))
   }
 
   public update = () => {
