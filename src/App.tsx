@@ -9,7 +9,7 @@ import Editor from './editor/Editor';
 import Graph from './graph/Graph';
 
 import './App.css';
-import { Force, GravityForce } from './math/Force';
+import { Force, GravityForce, InelasticCollisionForce, SimpleCollisionForce } from './math/Force';
 import { FreeBody } from './math/FreeBody';
 import Node from './math/Node';
 import Vector from './math/Vector';
@@ -52,26 +52,38 @@ class App extends React.Component<Props, State> {
           "Test")
       )),
     forces: [
-      GravityForce(100000)
+      GravityForce(10000000),
+    ],
+    postForces: [
+      InelasticCollisionForce(40),
+      SimpleCollisionForce(40)
     ]
   }
 
   public update = () => {
     let prevTime = performance.now();
     requestAnimationFrame(time => {
-      const deltaTime = (time - prevTime) / 1000.0;
+      const deltaTime = Math.min((time - prevTime) / 1000.0, 1.0 / 20.0);
       prevTime = time;
 
-      const { nodes, forces } = this.state;
+      const { nodes, forces, postForces } = this.state;
       this.setState({
         nodes: map(
           Node.withFreeBody,
           nodes,
-          forces.reduce(
-            (bodies: FreeBody[], force: Force) =>
+
+          postForces
+            .reduce<FreeBody[]>((bodies, force: Force) =>
               force(bodies, deltaTime),
-            nodes.map(prop.freeBody)))
-          .map(node => node.update(deltaTime))
+              forces
+                .reduce<FreeBody[]>(
+                  (bodies, force: Force) =>
+                    force(bodies, deltaTime),
+                  nodes.map(prop.freeBody))
+                .map(e => e.update(deltaTime))))
+
+
+
 
       }, this.update)
     })

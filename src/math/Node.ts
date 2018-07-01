@@ -13,9 +13,6 @@ export default class Node {
         )
     }
 
-    public withFreeBody = Node.withFreeBody.bind(Node, this);
-    public update = Node.update.bind(Node, this)
-
     public props: any;
     public freeBody: FreeBody;
     constructor(freeBody: FreeBody, props: any) {
@@ -23,5 +20,7 @@ export default class Node {
         this.props = props;
     }
 
+    public withFreeBody = (freeBody: FreeBody) => Node.withFreeBody(this, freeBody);
+    public update = (deltaTime: number) => Node.update(this, deltaTime);
 
 }

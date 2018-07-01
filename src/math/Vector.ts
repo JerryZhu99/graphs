@@ -43,14 +43,18 @@ export default class Vector implements PointLike {
     public readonly x: number;
     public readonly y: number;
 
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y
+    }
 
-    public add = Vector.add.bind(Vector, this);
-    public sub = Vector.sub.bind(Vector, this);
-    public dist2 = Vector.dist2.bind(Vector, this);
-    public dist = Vector.dist.bind(Vector, this);
-    public dot = Vector.dot.bind(Vector, this);
-    public scale = Vector.scale.bind(Vector, this);
-    public normalize = Vector.normalize.bind(Vector, this);
+    public add = (v: Vector) => Vector.add(this, v);
+    public sub = (v: Vector) => Vector.sub(this, v);
+    public dist2 = (v: Vector) => Vector.dist2(this, v);
+    public dist = (v: Vector) => Vector.dist(this, v);
+    public dot = (v: Vector) => Vector.dot(this, v);
+    public scale = (factor: number) => Vector.scale(this, factor);
+    public normalize = () => Vector.normalize(this);
 
     public get length2() {
         return this.x * this.x + this.y * this.y;
@@ -59,10 +63,4 @@ export default class Vector implements PointLike {
     public get length() {
         return Math.sqrt(this.length2);
     }
-
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y
-    }
-
 }
