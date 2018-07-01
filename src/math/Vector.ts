@@ -27,8 +27,17 @@ export default class Vector implements PointLike {
         return disp.length;
     }
 
+    public static dot(a: Vector, b: Vector) {
+        return a.x * b.x + a.y * b.y;
+    }
+
     public static scale(v: Vector, factor: number) {
         return new Vector(v.x * factor, v.y * factor);
+    }
+
+    public static normalize(v: Vector) {
+        if (v.length === 0) { return v };
+        return v.scale(1 / v.length);
     }
 
     public readonly x: number;
@@ -39,7 +48,9 @@ export default class Vector implements PointLike {
     public sub = Vector.sub.bind(Vector, this);
     public dist2 = Vector.dist2.bind(Vector, this);
     public dist = Vector.dist.bind(Vector, this);
+    public dot = Vector.dot.bind(Vector, this);
     public scale = Vector.scale.bind(Vector, this);
+    public normalize = Vector.normalize.bind(Vector, this);
 
     public get length2() {
         return this.x * this.x + this.y * this.y;

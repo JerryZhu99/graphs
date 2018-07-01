@@ -9,10 +9,11 @@ import Editor from './editor/Editor';
 import Graph from './graph/Graph';
 
 import './App.css';
+import { Force, GravityForce } from './math/Force';
 import { FreeBody } from './math/FreeBody';
 import Node from './math/Node';
 import Vector from './math/Vector';
-import { random } from './utils/Functions';
+import { map, prop, random } from './utils/Functions';
 
 const styles = (theme: Theme) => createStyles({
   app: {
@@ -49,7 +50,10 @@ class App extends React.Component<Props, State> {
               random() * 50,
               random() * 50)),
           "Test")
-      ))
+      )),
+    forces: [
+      GravityForce(100000)
+    ]
   }
 
   public update = () => {
@@ -57,8 +61,18 @@ class App extends React.Component<Props, State> {
     requestAnimationFrame(time => {
       const deltaTime = (time - prevTime) / 1000.0;
       prevTime = time;
+
+      const { nodes, forces } = this.state;
       this.setState({
-        nodes: this.state.nodes.map(e => e.update(deltaTime))
+        nodes: map(
+          Node.withFreeBody,
+          nodes,
+          forces.reduce(
+            (bodies: FreeBody[], force: Force) =>
+              force(bodies, deltaTime),
+            nodes.map(prop.freeBody)))
+          .map(node => node.update(deltaTime))
+
       }, this.update)
     })
   }

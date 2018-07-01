@@ -19,7 +19,7 @@ export class FreeBody {
     }
 
     public addVelocity(velocity: Vector) {
-        return this.withPosition(this.velocity.add(velocity))
+        return this.withVelocity(this.velocity.add(velocity))
     }
 
     public withPosition(position: Vector) {

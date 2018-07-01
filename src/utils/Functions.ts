@@ -6,9 +6,11 @@ export const curry = (fn: AnyFn, ...given: any[]) =>
     (...args: any[]) =>
         fn(...given, ...args)
 
-export const prop = new Proxy({}, {
-    get: (obj, p) => (e: any) => (e[p])
-})
+export const prop: {
+    [key: string]: <T>(e: T) => T[keyof T]
+} = new Proxy({}, {
+    get: <T>(obj: any, p: keyof T) => (e: T) => (e[p])
+});
 
 
 export const compose = (...fns: AnyFn[]) =>
