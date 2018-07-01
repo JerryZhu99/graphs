@@ -9,7 +9,7 @@ import Editor from './editor/Editor';
 import Graph from './graph/Graph';
 
 import './App.css';
-import { Force, GravityForce, InelasticCollisionForce, SimpleCollisionForce } from './math/Force';
+import { CenteringForce, Force, GravityForce, InelasticCollisionForce, SimpleCollisionForce } from './math/Force';
 import { FreeBody } from './math/FreeBody';
 import Node from './math/Node';
 import Vector from './math/Vector';
@@ -53,10 +53,11 @@ class App extends React.Component<Props, State> {
       )),
     forces: [
       GravityForce(10000000),
+      InelasticCollisionForce(45),
     ],
     postForces: [
-      InelasticCollisionForce(40),
-      SimpleCollisionForce(40)
+      SimpleCollisionForce(40),
+      CenteringForce(),
     ]
   }
 

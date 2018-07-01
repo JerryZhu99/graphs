@@ -7,7 +7,7 @@ export const curry = (fn: AnyFn, ...given: any[]) =>
         fn(...given, ...args)
 
 export const prop: {
-    [key: string]: <T>(e: T) => T[keyof T]
+    [key: string]: <T>(e: keyof T) => keyof T
 } = new Proxy({}, {
     get: <T>(obj: any, p: keyof T) => (e: T) => (e[p])
 });
