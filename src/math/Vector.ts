@@ -1,12 +1,17 @@
 
-
+/**
+ * Any 2d point (x, y).
+ */
 export interface PointLike {
     x: number,
     y: number
 }
 
-
+/**
+ * A 2D Vector (x, y)
+ */
 export default class Vector implements PointLike {
+
     public static ZERO = new Vector(0, 0);
 
     public static add(a: Vector, b: Vector) {
@@ -17,6 +22,11 @@ export default class Vector implements PointLike {
         return new Vector(a.x - b.x, a.y - b.y);
     }
 
+    /**
+     * Computes the square of the euclidean distance between a and b 
+     * @param a 
+     * @param b 
+     */
     public static dist2(a: Vector, b: Vector) {
         const disp = Vector.sub(a, b);
         return disp.length2;

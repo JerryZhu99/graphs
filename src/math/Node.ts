@@ -1,5 +1,8 @@
 import { FreeBody } from "./FreeBody";
 
+/**
+ * A class containing data for a graph node. 
+ */
 export default class Node {
 
     public static withFreeBody(node: Node, freeBody: FreeBody) {

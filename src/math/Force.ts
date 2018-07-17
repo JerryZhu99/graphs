@@ -51,5 +51,5 @@ export const CenteringForce: () => Force = () =>
                 body.position.sub(
                     bodies
                         .map(prop.position)
-                        .reduce(Vector.add, Vector.ZERO)
+                        .reduce<Vector>(Vector.add, Vector.ZERO)
                         .scale(1.0 / bodies.length))))
