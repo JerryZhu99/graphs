@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PointLike } from '../math/Vector';
+import { PointLike } from '../physics/Vector';
 
 
 interface Props {

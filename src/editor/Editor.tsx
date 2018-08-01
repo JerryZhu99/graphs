@@ -1,5 +1,5 @@
+import { createStyles, Divider, Drawer, List, ListItem, ListItemText, Theme, withStyles, WithStyles } from '@material-ui/core'
 import * as React from 'react';
-import { createStyles, Divider, Drawer, List, ListItem, ListItemText, Theme, withStyles, WithStyles } from '../../node_modules/@material-ui/core';
 
 const drawerWidth = 480;
 

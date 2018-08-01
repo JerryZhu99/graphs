@@ -1,18 +1,18 @@
 import * as React from 'react';
 
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { createStyles, Theme, withStyles, WithStyles } from '../node_modules/@material-ui/core';
 
 import Editor from './editor/Editor';
 import Graph from './graph/Graph';
 
 import './App.css';
-import { CenteringForce, Force, GravityForce, InelasticCollisionForce, SimpleCollisionForce } from './math/Force';
-import { FreeBody } from './math/FreeBody';
-import Node from './math/Node';
-import Vector from './math/Vector';
+
+import { CenteringForce, Force, GravityForce, InelasticCollisionForce, SimpleCollisionForce } from './physics/Force';
+import { FreeBody } from './physics/FreeBody';
+import Vector from './physics/Vector';
 import { map, prop, random } from './utils/Functions';
 
 const styles = (theme: Theme) => createStyles({
@@ -34,23 +34,21 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface State {
-  nodes: Node[];
+  nodes: any[];
 }
 
 class App extends React.Component<Props, State> {
   public state = {
     nodes:
-      (new Array(20)).fill(0).map(() => (
-        new Node(
-          new FreeBody(
-            new Vector(
-              random() * 500,
-              random() * 500),
-            new Vector(
-              random() * 50,
-              random() * 50)),
-          "Test")
-      )),
+      (new Array(20)).fill(0).map(() => ({
+        freeBody: new FreeBody(
+          new Vector(
+            random() * 500,
+            random() * 500),
+          new Vector(
+            random() * 50,
+            random() * 50)),
+      })),
     forces: [
       GravityForce(10000000),
       InelasticCollisionForce(45),
@@ -70,7 +68,7 @@ class App extends React.Component<Props, State> {
       const { nodes, forces, postForces } = this.state;
       this.setState({
         nodes: map(
-          Node.withFreeBody,
+          (n, freeBody) => (n.freeBody = freeBody, n),
           nodes,
 
           postForces

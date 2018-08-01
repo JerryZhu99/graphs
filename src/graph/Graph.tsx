@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { createStyles, Theme, withStyles, WithStyles } from '../../node_modules/@material-ui/core';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core'
 
-import Node from '../math/Node';
 import GraphNode from './GraphNode';
 
+type Node = any;
 
 const styles = (theme: Theme) => createStyles({
     appBar: {
